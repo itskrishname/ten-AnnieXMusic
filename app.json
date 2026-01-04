@@ -29,7 +29,7 @@
     "MONGO_DB_URI": {
       "description": "MongoDB database connection URI, used for storing user and bot-related data. Get it from https://cloud.mongodb.com.",
       "required": true,
-      "value": "mongodb+srv://Krishna:krishna@cluster0.ecime.mongodb.net/"
+      "value": "mongodb+srv://raj:krishna@cluster0.eq8xrjs.mongodb.net/"
     },
     "OWNER_ID": {
       "description": "Your Telegram numeric user ID (use @userinfobot to find it). Multiple IDs can be separated by a space.",
