@@ -50,10 +50,20 @@ async def fetch_and_store_cookies():
 
     cookies = (response.text or "").strip()
 
-    if not cookies.startswith("# Netscape"):
+    if "# Netscape HTTP Cookie File" not in cookies:
+        if COOKIE_PATH.exists():
+            try:
+                COOKIE_PATH.unlink()
+            except Exception:
+                pass
         raise ValueError("⚠️ ɪɴᴠᴀʟɪᴅ ᴄᴏᴏᴋɪᴇ ꜰᴏʀᴍᴀᴛ. ɴᴇᴇᴅs ɴᴇᴛsᴄᴀᴘᴇ ꜰᴏʀᴍᴀᴛ.")
 
     if len(cookies) < 100:
+        if COOKIE_PATH.exists():
+            try:
+                COOKIE_PATH.unlink()
+            except Exception:
+                pass
         raise ValueError("⚠️ ᴄᴏᴏᴋɪᴇ ᴄᴏɴᴛᴇɴᴛ ᴛᴏᴏ sʜᴏʀᴛ. ᴘᴏssɪʙʟʏ ɪɴᴠᴀʟɪᴅ.")
 
     COOKIE_PATH.parent.mkdir(parents=True, exist_ok=True)
