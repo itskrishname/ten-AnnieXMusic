@@ -2,6 +2,7 @@ import asyncio
 import contextlib
 import os
 import re
+import traceback
 from typing import Dict, Optional, Union
 
 import aiofiles
@@ -9,6 +10,7 @@ import aiohttp
 from aiohttp import TCPConnector
 from yt_dlp import YoutubeDL
 
+from ANNIEMUSIC.logging import LOGGER
 from ANNIEMUSIC.core.dir import DOWNLOAD_DIR as _DOWNLOAD_DIR, CACHE_DIR
 from ANNIEMUSIC.utils.cookie_handler import COOKIE_PATH
 from ANNIEMUSIC.utils.tuning import CHUNK_SIZE, SEM
@@ -134,7 +136,9 @@ def _download_ytdlp(link: str, opts: Dict) -> Optional[str]:
                 return path
             ydl.download([link])
             return path
-    except Exception:
+    except Exception as e:
+        LOGGER(__name__).warning(f"Failed to download {link}: {e}")
+        LOGGER(__name__).warning(traceback.format_exc())
         return None
 
 
