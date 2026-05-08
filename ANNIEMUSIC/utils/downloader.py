@@ -130,10 +130,20 @@ def _download_ytdlp(link: str, opts: Dict) -> Optional[str]:
             ext = info.get("ext") or "webm"
             vid = info.get("id")
             path = f"{_DOWNLOAD_DIR}/{vid}.{ext}"
+
             if os.path.exists(path):
-                return path
+                if os.path.getsize(path) > 0:
+                    return path
+                os.remove(path)
+
             ydl.download([link])
-            return path
+
+            if os.path.exists(path) and os.path.getsize(path) > 0:
+                return path
+
+            if os.path.exists(path):
+                os.remove(path)
+            return None
     except Exception:
         return None
 
